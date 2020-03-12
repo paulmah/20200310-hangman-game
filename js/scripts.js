@@ -53,48 +53,40 @@ function Hangman() {
 
     this.guessLetter = function (event) {
         event.preventDefault();
-        //Check if the guessed letter was previously guessed
-        if(this.previousGuesses == null && this.previousGuesses.includes(gameController.input.value)) {
-            console.log(this.previousGuesses);
-            console.log(gameController.input.value);
-            confirm('You guessed this letter already. Try again!');
+        //Check if the guessed letter is in the word
+        if (_this.word.includes(gameController.input.value)) {
+            //Update the display string (showing the letters)
+            for (var i = 0; i < _this.word.length; i++) {
+                //loop through each letter in our word, one-by-one
+                var currentChar = _this.word.substr(i, 1);
+                //If the current character matches what we have guessed
+                if (currentChar === gameController.input.value) {
+
+                    _this.displayString = //Slice the pieces that we need using .slice() https://www.w3schools.com/jsref/jsref_slice_array.asp
+                        _this.displayString.slice(0, i) + //is grabbing all the underscores BEFORE our matched character
+                        currentChar + //Concatenating in our current character which matches with our word.
+                        _this.displayString.slice(i + 1, _this.displayString.length);//is grabbing all the underscores AFTER our matched character
+
+                    //We still have to output our code to the browser
+                    gameController.word.textContent = _this.displayString;
+                }
+            }
+
+            //has the word been completely solved?
+            if (!gameController.word.textContent.includes('_')) {
+                //Win!
+                _this.win();
+            }
         } else {
-            this.previousGuesses.push(gameController.input.value);
-            //Check if the guessed letter is in the word
-            if (_this.word.includes(gameController.input.value)) {
-                //Update the display string (showing the letters)
-                for (var i = 0; i < _this.word.length; i++) {
-                    //loop through each letter in our word, one-by-one
-                    var currentChar = _this.word.substr(i, 1);
-                    //If the current character matches what we have guessed
-                    if (currentChar === gameController.input.value) {
+            //Letter is not in word
+            //Burn one chance
+            _this.chances--;
+            //Update user interface
+            gameController.chances.textContent = _this.chances;
 
-                        _this.displayString = //Slice the pieces that we need using .slice() https://www.w3schools.com/jsref/jsref_slice_array.asp
-                            _this.displayString.slice(0, i) + //is grabbing all the underscores BEFORE our matched character
-                            currentChar + //Concatenating in our current character which matches with our word.
-                            _this.displayString.slice(i + 1, _this.displayString.length);//is grabbing all the underscores AFTER our matched character
-
-                        //We still have to output our code to the browser
-                        gameController.word.textContent = _this.displayString;
-                    }
-                }
-
-                //has the word been completely solved?
-                if (!gameController.word.textContent.includes('_')) {
-                    //Win!
-                    _this.win();
-                }
-            } else {
-                //Letter is not in word
-                //Burn one chance
-                _this.chances--;
-                //Update user interface
-                gameController.chances.textContent = _this.chances;
-
-                //Check for game over
-                if ( _this.chances == 0 ){
-                    _this.lose();
-                }
+            //Check for game over
+            if ( _this.chances == 0 ){
+                _this.lose();
             }
         }
         //Reset the input
