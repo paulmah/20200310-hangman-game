@@ -1,18 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset = "utf-8">
-        <title>
-            Hangman game
-        </title>
-        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-        <link rel = "stylesheet" type="text/css" href="./css/main.css">
-        <script type="text/javascript" src="./js/scripts.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hangman</title>
+
+        <link rel="stylesheet" href="./styles/main.css">
+        <script type="text/javascript" src="./js/scripts.js" defer></script>
     </head>
     <body>
-        <h1>Hangman Game</h1>
-
-
+        <h1>Hangman</h1>
+        <p>Enter a guess to begin.</p>
+        <form action="#" method="GET">
+            <label for="guess">
+                Enter a guess:
+                <input type="text" name="guess" maxlength="1">
+            </label>
+            <input type="submit" value="Guess!">
+        </form>
+        <dl>
+            <dt>Word</dt>
+            <dd class="word"></dd>
+            <dt>Chances</dt>
+            <dd class="chances"></dd>
+            <dt>Previous Guesses</dt>
+            <dd>
+                <ul class="previous-guesses"></ul>
+            </dd>
+        </dl>
     </body>
-
 </html>
